@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour {
 
+	public AudioClip crack;
 	public Sprite[] hitSprites;
+	public static int breakableCount = 0;
+	public AudioClip[] comboList;
+	public static int combo = 0;
+	public static int comboIndex = 0;
 
 	private LevelManager levelManager;
 	private int count;
+	private bool isBreakable;
 
 	// Use this for initialization
 	void Start () {
+		isBreakable = (this.tag == "Breakable");
+		if (isBreakable) {
+			breakableCount++;
+		}
 		levelManager = FindObjectOfType<LevelManager> ();
 		count = 0;
+
 	}
 	
 	// Update is called once per frame
@@ -21,7 +32,8 @@ public class Brick : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D collider) {
-		if (this.tag == "Breakable") {
+		AudioSource.PlayClipAtPoint (crack, transform.position);
+		if (isBreakable) {
 			HandleHits();
 		}
 
@@ -30,7 +42,17 @@ public class Brick : MonoBehaviour {
 	void HandleHits () {
 		int maxHits = hitSprites.Length + 1;
 		if (++count >= maxHits) {
+			breakableCount--;
+			if (++combo >= 3) {
+				combo = 0;
+				AudioSource.PlayClipAtPoint (comboList [comboIndex++], transform.position);
+			}
+			if (comboIndex >= comboList.Length) {
+				comboIndex = 0;
+			}
 			Destroy (gameObject);
+			print(breakableCount);
+			levelManager.BrickDestroyed ();
 		} else {
 			LoadSprites ();
 		}
