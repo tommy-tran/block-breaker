@@ -16,11 +16,9 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void LoadNextLevel() {
-		if (audioIndex == winSounds.Length)
-			audioIndex = 0;
-		if ((Application.loadedLevel + 1) == 4) {
-			AudioSource.PlayClipAtPoint (winSounds [audioIndex++], transform.position);
-		}
+		Brick.breakableCount = 0;
+		Brick.comboIndex = 0;
+		Brick.combo = 0;
 		Application.LoadLevel (Application.loadedLevel + 1);
 	}
 

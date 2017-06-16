@@ -10,6 +10,8 @@ public class LoserColider : MonoBehaviour {
 		levelManager = GameObject.FindObjectOfType<LevelManager> ();
 		levelManager.LoadLevel ("Lose Screen");
 		Brick.breakableCount = 0;
+		Brick.comboIndex = 0;
+		Brick.combo = 0;
 	}
 
 	void OnCollisionEnter2D (Collision2D collision) {

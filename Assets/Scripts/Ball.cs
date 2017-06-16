@@ -31,8 +31,18 @@ public class Ball : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D collision) {
+		Vector2 tweak = new Vector2 (Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));
+		Vector2 speed = new Vector2 (0, 0.03f);
+
+		if (this.GetComponent<Rigidbody2D> ().velocity.y < 0) {
+			this.GetComponent<Rigidbody2D> ().velocity -= speed;
+		} else {
+			this.GetComponent<Rigidbody2D> ().velocity += speed;
+		}
+
 		if (hasStarted) {
 			GetComponent<AudioSource> ().Play ();
+			this.GetComponent<Rigidbody2D> ().velocity += tweak;
 		}
 
 	}
