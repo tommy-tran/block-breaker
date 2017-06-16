@@ -6,7 +6,7 @@ public class MusicPlayer : MonoBehaviour {
 	static MusicPlayer instance = null;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		if (instance != null) {
 			Destroy (gameObject);
 		} else {
