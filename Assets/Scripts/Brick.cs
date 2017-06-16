@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour {
 
+	private LevelManager levelManager;
 	public int maxHits;
 	private int count;
 
 	// Use this for initialization
 	void Start () {
+		levelManager = FindObjectOfType<LevelManager> ();
 		count = 0;
 	}
 	
@@ -19,6 +21,11 @@ public class Brick : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D collider) {
 		count++;
+		SimulateWin ();
 	}
 
+	// TODO Remove this method once we can actually win!
+	void SimulateWin () {
+		levelManager.LoadNextLevel ();
+	}
 }
