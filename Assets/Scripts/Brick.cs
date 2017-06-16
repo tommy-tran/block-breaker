@@ -10,6 +10,7 @@ public class Brick : MonoBehaviour {
 	public AudioClip[] comboList;
 	public static int combo = 0;
 	public static int comboIndex = 0;
+	public GameObject smoke;
 
 	private LevelManager levelManager;
 	private int count;
@@ -50,9 +51,10 @@ public class Brick : MonoBehaviour {
 			if (comboIndex >= comboList.Length) {
 				comboIndex = 0;
 			}
-			Destroy (gameObject);
-			print(breakableCount);
 			levelManager.BrickDestroyed ();
+			GameObject particles = Instantiate (smoke, gameObject.transform.position, Quaternion.identity);
+			particles.GetComponent<ParticleSystem>().startColor = gameObject.GetComponent<SpriteRenderer> ().color;
+			Destroy (gameObject);
 		} else {
 			LoadSprites ();
 		}
